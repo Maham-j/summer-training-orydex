@@ -15,34 +15,50 @@ patients = [
 
 def total_patients(patient_records):
     """Return the total number of patients."""
-    # TODO: Implement this function.
-    pass
+    return len(patient_records)
+    
+    
 
 
 def average_age(patient_records):
     """Return the average patient age."""
-    # TODO: Implement this function.
-    pass
-
+    ages = [patient["age"]for patient in patient_records]
+    t_patients = len(patients)
+    t_age = sum(ages)
+    average = t_age/t_patients
+    return average
+    
+   
+    
 
 def count_active_patients(patient_records):
     """Return the number of active patients."""
-    # TODO: Implement this function.
-    pass
+    activate = [patient["active"] for patient in patient_records if patient["active"] == True ]
+    return len(activate)
 
 
 def unique_conditions(patient_records):
     """Return a sorted list of unique conditions."""
-    # TODO: Implement this function.
-    pass
-
+    con = [patient["condition"]for patient in patient_records]
+    unique = set(con)
+    return sorted(list(unique))
 
 def count_by_condition(patient_records):
     """Return a dictionary containing patient count by condition."""
-    # TODO: Implement this function.
-    pass
+    diction = {}
+    for patient in patient_records:
+        if patient["condition"] in diction:
+            diction[patient["condition"]] += 1
+        else:
+            diction[patient["condition"]] = 1
+            
+    return diction
+    
 
 
 if __name__ == "__main__":
-    # TODO: Print the summary results clearly.
-    pass
+    print("Total_patients: ", total_patients(patients))
+    print("Average_age: ",average_age(patients))
+    print("Active_patients: ",count_active_patients(patients))
+    print("Unique_conditions: ",unique_conditions(patients))
+    print("Count_by_condition: ",count_by_condition(patients))
