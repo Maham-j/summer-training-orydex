@@ -15,33 +15,45 @@ patients = [
 def calculate_bmi(weight_kg: float, height_m: float) -> float:
     """Calculate BMI."""
     # TODO: Implement BMI formula.
-    pass
+    return weight_kg/height_m **2
 
 
 def classify_bmi(bmi: float) -> str:
     """Return BMI category."""
     # TODO: Return underweight, normal, overweight, or obese.
-    pass
+    if bmi < 18.5:
+        return "underweight"
+    elif bmi < 24.9 and bmi > 18.5:
+        return "normal"
+    elif bmi < 29.9 and bmi > 25:
+        return "overweight"
+    else:
+        return "obese"
 
 
 def format_name(name: str) -> str:
     """Convert a name to title case."""
     # TODO: Format name.
-    pass
+    return name.title()
 
 
 def get_active_patients(patient_records: list[dict]) -> list[dict]:
     """Return active patients only."""
     # TODO: Filter active patients.
-    pass
+    actives = [patient for patient in patient_records if patient["active"] == True]
+    return actives
 
 
 def sort_patients_by_weight(patient_records: list[dict]) -> list[dict]:
     """Return patients sorted by weight using a lambda."""
     # TODO: Sort patients by weight_kg.
-    pass
+    return sorted(patient_records, key=lambda patient: patient["weight_kg"])
 
 
 if __name__ == "__main__":
     # TODO: Call your functions and print useful output.
-    pass
+    print(calculate_bmi(68, 1.65))
+    print(classify_bmi(25))
+    print(format_name("ayesha khan"))
+    print(get_active_patients(patients))
+    print(sort_patients_by_weight(patients))
