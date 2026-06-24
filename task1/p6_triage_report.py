@@ -19,23 +19,54 @@ patients = [
 def label_risk(risk_score: int) -> str:
     """Return low, medium, or high based on risk score."""
     # TODO: Define thresholds and return label.
-    pass
-
+    if risk_score < 50:
+        return "low"
+    elif risk_score < 75:
+        return "medium"
+    else:
+        return "high"
 
 def add_risk_labels(patient_records: list[dict]) -> list[dict]:
     """Return copies of patient records with a risk_label field added."""
     # TODO: Add risk labels without modifying original records.
-    pass
+    new = []
+    for patient in patient_records:
+        copy = patient.copy()
+        copy["risk_label"] = label_risk(patient["risk_score"])
+        new.append(copy)
+    return new
 
 
 def build_triage_report(patient_records: list[dict]) -> dict:
     """Build a triage report from patient records."""
     # TODO: Build and return final report.
-    pass
-
+    labeled = add_risk_labels(patient_records)
+    total = len(patient_records) 
+    high = [p for p in labeled if p["risk_label"] == "high" and p["active"]]
+    
+    by_risk = {}
+    for p in labeled:
+        label = p["risk_label"]
+        if label in by_risk:
+            by_risk[label] += 1
+        else:
+            by_risk[label] = 1
+    return {
+    "summary": {"total_patients": total},
+    "risk_counts": by_risk,
+    "active_high_risk_patients": high
+}
 
 if __name__ == "__main__":
     report = build_triage_report(patients)
     print(report)
 
     # TODO: Add assertions after implementing the functions.
+    report = build_triage_report(patients)
+    print(report)
+    
+    # assertions
+    assert report["total"] == 4
+    assert report["by_risk"]["high"] == 2
+    assert len(report["high_risk_active"]) == 2
+    print("All assertions passed!")
