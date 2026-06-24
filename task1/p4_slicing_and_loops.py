@@ -17,29 +17,26 @@ def slicing_examples():
     reverse = patient_ids[::-1]
 
     return (first, last, reverse)
-    
- 
-
 
 
 def loop_examples():
     """Practice range, enumerate, and zip."""
     # TODO: Use enumerate to print numbered patient names.
     # TODO: Use zip to pair IDs with names.
-    for i,name in enumerate(patient_names):
-        print(i,name)
-    
-    for i,name in zip(patient_ids, patient_names):
-        print(i,name)
+    for i, name in enumerate(patient_names):
+        print(i, name)
+
+    for i, name in zip(patient_ids, patient_names):
+        print(i, name)
 
 
 def comprehension_examples():
     """Return values created using comprehensions."""
     # TODO: Create a list of even patient IDs.
     # TODO: Create uppercase patient names.
-    even = [ids for ids in patient_ids if ids%2==0]
+    even = [ids for ids in patient_ids if ids % 2 == 0]
     upper = [names.upper() for names in patient_names]
-    
+
     return (even, upper)
 
 

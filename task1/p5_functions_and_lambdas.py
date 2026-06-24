@@ -15,7 +15,7 @@ patients = [
 def calculate_bmi(weight_kg: float, height_m: float) -> float:
     """Calculate BMI."""
     # TODO: Implement BMI formula.
-    return weight_kg/height_m **2
+    return weight_kg / height_m**2
 
 
 def classify_bmi(bmi: float) -> str:
@@ -40,7 +40,7 @@ def format_name(name: str) -> str:
 def get_active_patients(patient_records: list[dict]) -> list[dict]:
     """Return active patients only."""
     # TODO: Filter active patients.
-    actives = [patient for patient in patient_records if patient["active"] == True]
+    actives = [patient for patient in patient_records if patient["active"]]
     return actives
 
 

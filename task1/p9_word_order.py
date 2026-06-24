@@ -25,7 +25,7 @@ def word_order(words: list[str]) -> tuple[int, list[int]]:
             count[word] += 1
         else:
             count[word] = 1
-            
+
     return (len(count), list(count.values()))
 
 

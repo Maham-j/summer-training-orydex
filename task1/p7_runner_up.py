@@ -20,6 +20,5 @@ def find_runner_up(scores: list[int]) -> int:
     return sort
 
 
-
 if __name__ == "__main__":
     print(find_runner_up(sample_scores))

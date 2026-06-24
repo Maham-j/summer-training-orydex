@@ -34,14 +34,11 @@ def set_operations(primary: set[str], follow_up: set[str]) -> dict[str, set[str]
     - "all_unique": every condition across both sets
     - "only_primary": conditions in primary but not in follow_up
     """
-    common = (primary  & follow_up)
-    all_unique = (primary.union(follow_up))
-    only_primary = (primary.difference(follow_up))
-    
-    return {                                  
-    "common": common,
-    "all_unique": all_unique,
-    "only_primary": only_primary}
+    common = primary & follow_up
+    all_unique = primary.union(follow_up)
+    only_primary = primary.difference(follow_up)
+
+    return {"common": common, "all_unique": all_unique, "only_primary": only_primary}
 
 
 if __name__ == "__main__":

@@ -26,6 +26,7 @@ def label_risk(risk_score: int) -> str:
     else:
         return "high"
 
+
 def add_risk_labels(patient_records: list[dict]) -> list[dict]:
     """Return copies of patient records with a risk_label field added."""
     # TODO: Add risk labels without modifying original records.
@@ -41,9 +42,9 @@ def build_triage_report(patient_records: list[dict]) -> dict:
     """Build a triage report from patient records."""
     # TODO: Build and return final report.
     labeled = add_risk_labels(patient_records)
-    total = len(patient_records) 
+    total = len(patient_records)
     high = [p for p in labeled if p["risk_label"] == "high" and p["active"]]
-    
+
     by_risk = {}
     for p in labeled:
         label = p["risk_label"]
@@ -52,10 +53,11 @@ def build_triage_report(patient_records: list[dict]) -> dict:
         else:
             by_risk[label] = 1
     return {
-    "summary": {"total_patients": total},
-    "risk_counts": by_risk,
-    "active_high_risk_patients": high
-}
+        "summary": {"total_patients": total},
+        "risk_counts": by_risk,
+        "active_high_risk_patients": high,
+    }
+
 
 if __name__ == "__main__":
     report = build_triage_report(patients)
@@ -64,7 +66,7 @@ if __name__ == "__main__":
     # TODO: Add assertions after implementing the functions.
     report = build_triage_report(patients)
     print(report)
-    
+
     # assertions
     assert report["total"] == 4
     assert report["by_risk"]["high"] == 2

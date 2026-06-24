@@ -32,9 +32,9 @@ def minion_game(word: str) -> str:
 
     for i, letter in enumerate(word):
         if letter in VOWELS:
-            kevin += n-i
+            kevin += n - i
         else:
-            stuart += n-i
+            stuart += n - i
 
     if stuart > kevin:
         return f"Stuart {stuart}"
