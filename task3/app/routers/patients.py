@@ -1,70 +1,81 @@
-from fastapi import APIRouter, HTTPException
-from app.models import PatientRead
-from app.models import PatientCreate
-from app.models import PatientUpdate
+from fastapi import APIRouter, HTTPException, Depends
+from app.models import PatientRead, PatientCreate, PatientUpdate, Patient
+from sqlmodel import Session, select
+from app.database import get_session
+
+
 
 
 router = APIRouter(prefix = "/patients", tags=["patients"])
 
-patients: list[PatientRead] = []
-
 
 @router.get("/", status_code=200)
-def get_patients(active: bool | None = None, condition: str | None = None, limit: int = 10, offset: int = 0):
-    results = patients
-
-    if active is not None:
-        result = [p for p in results if p.active == active]
-
-    if condition is not None:
-        results = [p for p in results if p.condition == condition]
+def get_patients(active: bool | None = None, condition: str | None = None, limit: int = 10, offset: int = 0, session: Session = Depends(get_session)):
+    query = select(Patient)
     
-    return results[offset: offset+limit]
+    if active is not None:
+        query = query.where(Patient.active == active)
+    
+    if condition is not None:
+        query = query.where(Patient.condition == condition)
+    
+    results = session.exec(query.offset(offset).limit(limit)).all()
+    return results
 
 
 @router.get("/{patient_id}", status_code=200)
-def get_patients(patient_id: int):
-    for index, patient in enumerate(patients):
-        if patient.id == patient_id:
-            return patient
-    raise HTTPException(status_code=404, detail="Patient not Found")   
+def get_patient(patient_id: int, session: Session = Depends(get_session)):
+    patient = session.get(Patient, patient_id)
+    if not patient:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    return patient
+
 
 @router.post("/", status_code=201)
-def post_patient(patient: PatientCreate):
-    new_patient = PatientRead(id=len(patients) + 1, **patient.model_dump())
-    patients.append(new_patient)
+def post_patient(patient: PatientCreate, session: Session = Depends(get_session)):
+    new_patient = Patient(**patient.model_dump())
+    session.add(new_patient)
+    session.commit()
+    session.refresh(new_patient)
     return new_patient
-  
+
+
 @router.put("/{patient_id}", status_code=200)
-def put_patient(patient_id: int, updated_patient: PatientCreate):
-    for index, patient in enumerate(patients):
-        if patient.id == patient_id:
-            new_patient = PatientRead(id=patient_id, **updated_patient.model_dump())
-            patients[index] = new_patient
-            return new_patient   
+def put_patient(patient_id: int, updated_patient: PatientCreate, session: Session = Depends(get_session)):
+    patient = session.get(Patient, patient_id)
+    if not patient:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    
+    for key, value in updated_patient.model_dump().items():
+        setattr(patient, key, value)
+    
+    session.add(patient)
+    session.commit()
+    session.refresh(patient)
+    return patient
 
-    raise HTTPException(status_code=404, detail="The id not Found")
 
-
-
-@router.patch("/{patient_id}", status_code=200)
-def patch_patient(patient_id: int, updated_patient: PatientUpdate):
-    for index, patient in enumerate(patients):
-        if patient.id == patient_id:
-            existing_data = patient.model_dump()
-            update_data = updated_patient.model_dump(exclude_unset=True)
-            existing_data.update(update_data)
-            new_patient = PatientRead(**existing_data)
-            patients[index] = new_patient
-            return new_patient
-
-    raise HTTPException(status_code=404, detail="The id not Found")
+@router.put("/{patient_id}", status_code=200)
+def put_patient(patient_id: int, updated_patient: PatientCreate, session: Session = Depends(get_session)):
+    patient = session.get(Patient, patient_id)
+    if not patient:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    
+    for key, value in updated_patient.model_dump().items():
+        setattr(patient, key, value)
+    
+    session.add(patient)
+    session.commit()
+    session.refresh(patient)
+    return patient
 
 
 @router.delete("/{patient_id}", status_code=204)
-def delete_patient(patient_id: int):
-    for index,patient in enumerate(patients):
-        if patient.id == patient_id:
-            patients.pop(index)
-            return None   
-    raise HTTPException(status_code=404, detail="The id not Found")
+def delete_patient(patient_id: int, session: Session = Depends(get_session)):
+    patient = session.get(Patient, patient_id)
+    if not patient:
+        raise HTTPException(status_code=404, detail="Patient not found")
+    
+    session.delete(patient)
+    session.commit()
+    return None

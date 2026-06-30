@@ -10,6 +10,7 @@ Then open the interactive docs at http://127.0.0.1:8000/docs
 """
 
 from fastapi import FastAPI
+from app.database import create_db_and_tables
 
 
 app = FastAPI(
@@ -28,6 +29,11 @@ def read_root() -> dict[str, str]:
 def health() -> dict[str, str]:
     """Return the service status. Useful for uptime checks."""
     return {"status": "ok"}
+
+
+@app.on_event("startup")
+def on_start_up():
+    create_db_and_tables()
 
 
 # TODO: create app/routers/patients.py and register it here, e.g.
