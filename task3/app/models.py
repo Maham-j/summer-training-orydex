@@ -34,3 +34,17 @@ class Patient(SQLModel, table=True):
     condition: str
     risk_score: int
     active: bool = True
+
+
+class User(SQLModel, table=True):
+    id: int | None = SQLField(default=None, primary_key=True)
+    username: str = SQLField(unique=True)
+    hashed_password: str
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+
+class UserRead(BaseModel):
+    id: int
+    username: str

@@ -40,4 +40,6 @@ def on_start_up():
 #     from app.routers import patients
 #     app.include_router(patients.router)
 from app.routers import patients
+from app.routers import auth
 app.include_router(patients.router)
+app.include_router(auth.router)

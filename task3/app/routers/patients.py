@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from app.models import PatientRead, PatientCreate, PatientUpdate, Patient
 from sqlmodel import Session, select
 from app.database import get_session
-
+from app.auth import get_current_user
 
 
 
@@ -32,7 +32,7 @@ def get_patient(patient_id: int, session: Session = Depends(get_session)):
 
 
 @router.post("/", status_code=201)
-def post_patient(patient: PatientCreate, session: Session = Depends(get_session)):
+def post_patient(patient: PatientCreate, session: Session = Depends(get_session), current_user: str = Depends(get_current_user)):
     new_patient = Patient(**patient.model_dump())
     session.add(new_patient)
     session.commit()
@@ -41,7 +41,7 @@ def post_patient(patient: PatientCreate, session: Session = Depends(get_session)
 
 
 @router.put("/{patient_id}", status_code=200)
-def put_patient(patient_id: int, updated_patient: PatientCreate, session: Session = Depends(get_session)):
+def put_patient(patient_id: int, updated_patient: PatientCreate, session: Session = Depends(get_session), current_user: str = Depends(get_current_user)):
     patient = session.get(Patient, patient_id)
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
@@ -56,7 +56,7 @@ def put_patient(patient_id: int, updated_patient: PatientCreate, session: Sessio
 
 
 @router.put("/{patient_id}", status_code=200)
-def put_patient(patient_id: int, updated_patient: PatientCreate, session: Session = Depends(get_session)):
+def put_patient(patient_id: int, updated_patient: PatientCreate, session: Session = Depends(get_session), current_user: str = Depends(get_current_user)):
     patient = session.get(Patient, patient_id)
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
@@ -71,7 +71,7 @@ def put_patient(patient_id: int, updated_patient: PatientCreate, session: Sessio
 
 
 @router.delete("/{patient_id}", status_code=204)
-def delete_patient(patient_id: int, session: Session = Depends(get_session)):
+def delete_patient(patient_id: int, session: Session = Depends(get_session), current_user: str = Depends(get_current_user)):
     patient = session.get(Patient, patient_id)
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
