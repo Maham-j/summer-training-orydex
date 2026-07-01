@@ -55,13 +55,13 @@ def put_patient(patient_id: int, updated_patient: PatientCreate, session: Sessio
     return patient
 
 
-@router.put("/{patient_id}", status_code=200)
-def put_patient(patient_id: int, updated_patient: PatientCreate, session: Session = Depends(get_session), current_user: str = Depends(get_current_user)):
+@router.patch("/{patient_id}", status_code=200)
+def patch_patient(patient_id: int, updated_patient: PatientUpdate, session: Session = Depends(get_session), current_user: str = Depends(get_current_user)):
     patient = session.get(Patient, patient_id)
     if not patient:
         raise HTTPException(status_code=404, detail="Patient not found")
     
-    for key, value in updated_patient.model_dump().items():
+    for key, value in updated_patient.model_dump(exclude_unset=True).items():
         setattr(patient, key, value)
     
     session.add(patient)
