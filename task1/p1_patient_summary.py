@@ -29,7 +29,7 @@ def average_age(patient_records):
 
 def count_active_patients(patient_records):
     """Return the number of active patients."""
-    activate = [patient["active"] for patient in patient_records if patient["active"] ]
+    activate = [patient["active"] for patient in patient_records if patient["active"]]
     return len(activate)
 
 
