@@ -245,21 +245,22 @@ Anything incomplete, or questions for the reviewer.
 Add your reflection here before submitting:
 
 ```text
-1. The most useful Git command I used was:
-2. One Git mistake or confusion I faced was:
-3. What is the difference between `fetch` and `pull`?
-4. When would you rebase instead of merge?
-5. Pull requests are useful because:
+1. The most useful Git command I used was: git-status is most useful because it tells what is stagged, what is not, and what branch you are on.
+2. One Git mistake or confusion I faced was:I got confused while creating the PR. I accidentally selected the main branch instead of my task branch, because of that I could not add reviewers.
+3. What is the difference between `fetch` and `pull`?:fetch = download remote changes to your machine 
+pull = fetch + automatically merge into your current branch
+4. When would you rebase instead of merge?: Rebase keeps history linear. Merge creates a merge commit, want to preserve the full branch history.
+5. Pull requests are useful because: PRs are useful because they let teammates review your code before it merges, catch bugs, suggest improvements, and keep main stable.
 ```
 
 ## Submission Checklist
 
-- [ ] I set up SSH access to GitHub and verified it with `ssh -T git@github.com`.
-- [ ] My repo's `origin` remote uses the SSH URL.
-- [ ] I created a `task1/...` branch for the Task 1 work.
-- [ ] I made several small, meaningful commits (not one giant commit).
-- [ ] I kept my branch up to date with `git fetch` + `git rebase`.
-- [ ] I opened a pull request into `main` with a clear description.
-- [ ] The **Task 1 Tests** CI check is green.
-- [ ] I did not commit secrets or real patient data.
-- [ ] My final `git status` is clean.
+- [x] I set up SSH access to GitHub and verified it with `ssh -T git@github.com`.
+- [x] My repo's `origin` remote uses the SSH URL.
+- [x] I created a `task1/...` branch for the Task 1 work.
+- [x] I made several small, meaningful commits (not one giant commit).
+- [x] I kept my branch up to date with `git fetch` + `git rebase`.
+- [x] I opened a pull request into `main` with a clear description.
+- [x] The **Task 1 Tests** CI check is green.
+- [x] I did not commit secrets or real patient data.
+- [x] My final `git status` is clean.
