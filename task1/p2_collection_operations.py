@@ -20,8 +20,10 @@ def list_operations(conditions: list[str]) -> list[str]:
     - Remove "asthma".
     - Return the list sorted alphabetically.
     """
-    # TODO: Implement the steps described above.
-    pass
+    copy = conditions.copy()
+    copy.append("cardiac")
+    copy.remove("asthma")
+    return sorted(list(copy))
 
 
 def set_operations(primary: set[str], follow_up: set[str]) -> dict[str, set[str]]:
@@ -32,8 +34,11 @@ def set_operations(primary: set[str], follow_up: set[str]) -> dict[str, set[str]
     - "all_unique": every condition across both sets
     - "only_primary": conditions in primary but not in follow_up
     """
-    # TODO: Build and return the dictionary described above.
-    pass
+    common = primary & follow_up
+    all_unique = primary.union(follow_up)
+    only_primary = primary.difference(follow_up)
+
+    return {"common": common, "all_unique": all_unique, "only_primary": only_primary}
 
 
 if __name__ == "__main__":
