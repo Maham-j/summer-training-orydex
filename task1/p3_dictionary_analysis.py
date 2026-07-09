@@ -43,14 +43,14 @@ def build_patient_summary():
     conditions = []
     cities = []
     phone_nos = []
-    ages = []  
+    ages = []
     for data in patients.values():
         names.append(data["name"])
         conditions.append(data["condition"])
         cities.append(data["contact"]["city"])
         phone_nos.append(data["contact"]["phone"])
-        ages.append(data["age"]) 
-    total = len(names)  
+        ages.append(data["age"])
+    total = len(names)
     return {
         "total": total,
         "names": names,
