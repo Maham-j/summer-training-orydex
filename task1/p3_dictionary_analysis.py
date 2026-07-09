@@ -34,9 +34,6 @@ def update_patient_condition(patient_id, new_condition):
     patients[patient_id]["condition"] = new_condition
 
 
-
-
-
 def build_patient_summary():
     """Build and return a summary dictionary."""
     names = []
@@ -59,6 +56,8 @@ def build_patient_summary():
         "phone_nos": phone_nos,
         "ages": ages,
     }
+
+
 if __name__ == "__main__":
     print(get_patient_city(2))
     print(patients[1])
