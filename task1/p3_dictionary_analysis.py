@@ -34,18 +34,26 @@ def update_patient_condition(patient_id, new_condition):
     patients[patient_id]["condition"] = new_condition
 
 
-# update_patient_condition(1, "asthma")
+
 
 
 def build_patient_summary():
     """Build and return a summary dictionary."""
-    total = len(patients)
-    names = [patients[patient]["name"] for patient in patients]
-    conditions = [patients[patient]["condition"] for patient in patients]
-    cities = [patients[patient]["contact"]["city"] for patient in patients]
-    phone_nos = [patients[patient]["contact"]["phone"] for patient in patients]
-    ages = [patients[patient]["age"] for patient in patients]
-
+    names = []
+    conditions = []
+    cities = []
+    phone_nos = []
+    ages = []
+    
+    for data in patients.values():
+        names.append(data["name"])
+        conditions.append(data["condition"])
+        cities.append(data["contact"]["city"])
+        phone_nos.append(data["contact"]["phone"])
+        ages.append(data["age"])
+    
+    total = len(names)
+    
     return {
         "total": total,
         "names": names,
@@ -54,8 +62,6 @@ def build_patient_summary():
         "phone_nos": phone_nos,
         "ages": ages,
     }
-
-
 if __name__ == "__main__":
     print(get_patient_city(2))
     print(patients[1])
