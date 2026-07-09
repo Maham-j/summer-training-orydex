@@ -47,6 +47,7 @@ def build_patient_summary():
         cities.append(data["contact"]["city"])
         phone_nos.append(data["contact"]["phone"])
         ages.append(data["age"])
+    total = len(names)
     return {
         "total": total,
         "names": names,
