@@ -1,18 +1,12 @@
-# Patient Management API — dependencies
-# Start minimal; uncomment/add the rest as you build each part.
-
 fastapi
 uvicorn[standard]
 pydantic
 pytest
 pytest-cov
 httpx
-
-# Database, config, and auth
-# pydantic-settings
-# sqlmodel
-# pyjwt
-# passlib[bcrypt]
-
-# Migrations
-# alembic
+pydantic-settings
+sqlmodel
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt==4.0.1
+python-multipart
