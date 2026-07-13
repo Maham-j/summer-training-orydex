@@ -15,7 +15,9 @@ def find_runner_up(scores: list[int]) -> int:
     Example: [2, 3, 6, 6, 5] -> 5 (6 is the highest, 5 is the runner-up).
     """
     # TODO: Remove duplicate scores, then return the second largest value.
-    pass
+    unique = sorted(set(scores))
+    sort = unique[-2]
+    return sort
 
 
 if __name__ == "__main__":
